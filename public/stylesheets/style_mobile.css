@@ -1,0 +1,90 @@
+body {
+  color: #003366;
+  background-color: #C7D0D9;
+  margin           : 0 0 2em 0;
+}
+div.banner {
+    background-image: url("http://forum.mozilla.gr.jp/images/h_bg.png");
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0 0;
+    background-color: transparent;
+    color: inherit;
+    width: 100%;
+}
+
+div.banner a {
+    color: inherit;
+    text-decoration: none;
+}
+
+div#threadView {
+  width:95%;
+}
+
+h1 {
+    margin: 0px;
+    padding: 0px;
+    color: hsl(0, 0%, 100%);
+    font-family: Verdena,Arial,Helvetica,sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+ul {
+  list-style-type: none;
+}
+
+div.title {
+  background-color: hsl(207, 55%, 92%);
+  
+}
+li.thread {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  background-color: white;
+}
+
+li.comment {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  background-color: white;
+}
+
+li.menuitem {
+  margin-right: 10px;
+  background-color: hsl(217, 16%, 74%);
+  border: 1px outset hsl(210, 100%, 20%);
+  color: hsl(210, 100%, 20%);
+}
+
+div.main {
+  color: #003366;
+  background-color: #C7D0D9;
+}
+div.primary {
+  margin-right: 200px;
+  padding: 1%;
+}
+div.sidebar {
+  float:right;
+  width: 200px;
+}
+div.footer {
+  text-align: center;
+  clear: both;
+}
+
+input#search {
+  width: 150px;
+}
+
+div.commentbuttons {
+  text-align: right;
+}

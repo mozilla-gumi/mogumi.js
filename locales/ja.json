@@ -1,0 +1,26 @@
+{
+    "forum_name": "もじら組フォーラム",
+
+    "title": "タイトル",
+    "text": "テキスト",
+    "name": "名前",
+    "email": "Email",
+    "send": "送信",
+    "reset": "リセット",
+    "write": "入力",
+    "preview": "プレビュー",
+    "edit": "編集",
+    "reply": "返信",
+
+    "latest": "最新",
+    "hot": "進行中",
+    "unanswered": "未回答",
+    
+    "threadlist": "スレッド一覧",
+    "thread": "スレッド",
+    "newthread": "新規スレッド作成",
+    
+    "help": "ヘルプ",
+    "settings": "設定",
+    "search": "検索"
+}

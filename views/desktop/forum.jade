@@ -1,0 +1,75 @@
+extends layout
+
+block append stylesheets
+  link(rel='stylesheet', href='/stylesheets/ui-lightness/jquery-ui-1.10.2.custom.css')
+  link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
+  link(rel='stylesheet', href='/stylesheets/pagedown.css')
+block append scripts
+  script(src='/javascripts/jquery-ui-1.10.2.custom.js')
+  script(src='/javascripts/mogumi_forum.js')
+  script#threadListTemplate(type='text/template')
+    <% _(threads).each(function(thread) { %>
+    li.thread
+      | <a class='threadLink' data-id='<%= thread.id %>' href='forum/thread?id=<%= thread.id %>'>
+      | <%= thread.title %>
+      | </a>
+      div.threadText <%= thread.text %>
+      div.threadDate <%= thread.updateDate %>
+    <% }); %>
+  script#threadTemplate(type='text/template')
+    <% _(comments).each(function(comment) { %>
+    li.comment
+      div <%= comment.title %>
+      div <%= comment.text %>
+      div.buttons
+        | <button class='btnEdit' type='button' data-id='<%= comment.id %>'>#{edit}</button>
+        | <button class='btnReply' data-id='<%= comment.id %>'>#{reply}</button>
+    <% }); %>
+  script#msgTemplate(type='text/template')
+    form#newpost(action='#', method='post')
+      fieldset(data-role='controlgroup')
+        div
+          label(for='title') #{title}
+          input#title(type='text', name='title', value='')
+        div
+          label(for='name') #{name}
+          input#name(type='text', name='name', value='')
+        div
+          label(for='email') #{email}
+          input#email(type='text', name='email', value='')
+        div#editTextTabs
+          ul
+            li
+              a(href='#write') #{write}
+            li
+              a(href='#preview') #{preview}
+          div#write
+            div#wmd-button-bar
+            textarea#wmd-input.wmd-input(name='text')
+          div#preview
+            div#wmd-preview.wmd-preview
+      div
+        input#btnSend(type="submit", value="#{send}")   
+        input#btnReset(type="reset", value="#{reset}")
+
+block append primary
+  div#threadListView
+    div#threadListTabs
+      ul
+        li
+          a#latest-link(href='#latest') #{latest}
+        li
+          a#hot-link(href='#hot') #{hot}
+        li
+          a#unanswered-link(href='#unanswered') #{unanswered}
+      div#latest
+        ul.threadList
+      div#hot
+        ul.threadList
+      div#unanswered
+        ul.threadList
+  div#threadView
+    ul#thread
+  div#messageWriter
+
+

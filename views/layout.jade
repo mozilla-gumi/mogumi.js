@@ -1,0 +1,28 @@
+doctype 5
+html
+  head
+    title= forum_name
+    link(rel='shortcut icon', href='http://www.mozilla.gr.jp/wp-content/themes/mozilla-gumi/favicon.ico')
+    block stylesheets
+      link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block header
+      div.banner
+        h1
+          a(href="http://www.mozilla.gr.jp/")
+            img(src="http://www.mozilla.gr.jp/forum/images/common/logo.png", alt="logo")
+          a(href="#{forum_root}") #{forum_name}
+    block content
+    block footer
+      div.footer
+        a(href='https://github.com/mozilla-gumi') mogumi.js
+    block scripts
+      script(src='/socket.io/socket.io.js')
+      script(src='/javascripts/jquery-1.9.1.js')
+      script(src='/javascripts/underscore.js')
+      script(src='/javascripts/json2.js')
+      script(src='/backbone/backbone.js')
+      script(src='/pagedown/Markdown.Converter.js')
+      script(src='/pagedown/Markdown.Sanitizer.js')
+      script(src='/javascripts/Markdown.Editor.js')
+      script(src='/javascripts/backbone.socketio.js')

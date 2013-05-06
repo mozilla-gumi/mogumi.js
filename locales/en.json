@@ -1,0 +1,26 @@
+{
+    "forum_name": "Mozilla-gumi Forum",
+
+    "title": "Title",
+    "text": "Text",
+    "name": "Name",
+    "email": "Email",
+    "send": "Send",
+    "reset": "Reset",
+    "write": "Write",
+    "preview": "Preview",
+    "edit": "Edit",
+    "reply": "Reply",
+
+    "latest": "Latest",
+    "hot": "Hot",
+    "unanswered": "Unanswered",
+    
+    "threadlist": "Thread List",
+    "thread": "Thread",
+    "newthread": "New Thread",
+
+    "help": "HELP",
+    "settings": "Settings",
+    "search": "Search"
+}

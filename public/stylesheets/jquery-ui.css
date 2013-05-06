@@ -1,0 +1,30 @@
+#editTextTabs {
+    border:1px solid #636363;
+    background:#c2c2c2 none; padding:5px;
+}
+
+.ui-widget-header {
+    border:0;
+    background:rgb(179, 187, 200) none;
+}
+
+#editTextTabs .ui-widget-content {
+    border:1px solid #aaaaaa; background:#ffffff none;
+    font-size:80%;
+}
+.ui-state-default, .ui-widget-content .ui-state-default {
+    background:#f6f6f6 none;
+    border:1px solid #ffffff;
+}
+.ui-state-active, .ui-widget-content .ui-state-active {
+    background:#ffffff none;
+    border:1px solid #ffffff;
+}
+.ui-state-active a:link {
+    color: rgb(0, 0, 238);
+    
+}
+.ui-state-default a:link {
+    color: rgb(0, 0, 088);
+    
+}

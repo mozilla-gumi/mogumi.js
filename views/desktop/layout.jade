@@ -1,0 +1,11 @@
+extends ../layout
+
+block stylesheets
+  link(rel='stylesheet', href='/stylesheets/style_desktop.css')
+
+block append content
+  div.sidebar
+    block sidebar
+      include forum_sidebar
+  div.primary
+    block primary

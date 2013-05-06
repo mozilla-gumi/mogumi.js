@@ -1,0 +1,7 @@
+extends forum
+
+block append scripts
+  script(src='/javascripts/mogumi_db.js')
+  script
+    $(document).ready(Mogumi.forum.test);
+
