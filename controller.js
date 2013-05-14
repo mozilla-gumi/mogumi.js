@@ -13,7 +13,7 @@ var routeStaticFiles = function (app) {
     };
     routeStaticFile('/backbone/backbone.js',
         '/node_modules/backbone/backbone.js');
-    
+
     routeStaticFile('/pagedown/Markdown.Converter.js',
         '/node_modules/pagedown/Markdown.Converter.js');
     routeStaticFile('/pagedown/Markdown.Sanitizer.js',

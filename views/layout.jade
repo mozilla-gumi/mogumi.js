@@ -14,7 +14,7 @@ html
           a(href="#{forum_root}") #{forum_name}
     block content
     block footer
-      div.footer
+      div#footer
         a(href='https://github.com/mozilla-gumi') mogumi.js
     block scripts
       script(src='/socket.io/socket.io.js')
@@ -22,7 +22,8 @@ html
       script(src='/javascripts/underscore.js')
       script(src='/javascripts/json2.js')
       script(src='/backbone/backbone.js')
+      script(src='/javascripts/backbone.socketio.js')
+      script(src='/javascripts/backbone.marionette.js')
       script(src='/pagedown/Markdown.Converter.js')
       script(src='/pagedown/Markdown.Sanitizer.js')
       script(src='/javascripts/Markdown.Editor.js')
-      script(src='/javascripts/backbone.socketio.js')

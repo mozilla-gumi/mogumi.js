@@ -3,7 +3,7 @@ var i18n = require('i18n');
 
 module.exports = function(app, express) {
     app.configure(function(){
-        app.set('port', process.env.PORT || 3000);
+        app.set('port', process.env.PORT || 80);
         app.set('views', __dirname + '/views');
         app.set('view engine', 'jade');
         app.set('db', 'mongodb://localhost/mogumi');
@@ -31,6 +31,7 @@ module.exports = function(app, express) {
     });
     
     app.configure('development', function(){
+        app.set('port', process.env.PORT || 3000);
         app.use(express.errorHandler());
     });
 

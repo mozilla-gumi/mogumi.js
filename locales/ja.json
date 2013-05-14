@@ -6,6 +6,7 @@
     "name": "名前",
     "email": "Email",
     "send": "送信",
+    "draft": "保存",
     "reset": "リセット",
     "write": "入力",
     "preview": "プレビュー",
@@ -15,10 +16,13 @@
     "latest": "最新",
     "hot": "進行中",
     "unanswered": "未回答",
+    "searchresult": "検索結果",
     
     "threadlist": "スレッド一覧",
     "thread": "スレッド",
     "newthread": "新規スレッド作成",
+    
+    "defaultThreadList": "スレッド一覧初期表示",
     
     "help": "ヘルプ",
     "settings": "設定",

@@ -19,11 +19,13 @@ block append scripts
   script#threadTemplate(type='text/template')
     <% _(comments).each(function(comment) { %>
     li.comment
-      div <%= comment.title %>
-      div <%= comment.text %>
-      div.buttons
-        | <button class='btnEdit' type='button' data-id='<%= comment.id %>'>#{edit}</button>
-        | <button class='btnReply' data-id='<%= comment.id %>'>#{reply}</button>
+      div.title <%= comment.title %>
+      div.text <%= comment.text %>
+      div.commentfooter
+        span.username <%= comment.author.name %>
+        span.buttons
+          | <button class='btnEdit' type='button' data-id='<%= comment.id %>'>#{edit}</button>
+          | <button class='btnReply' data-id='<%= comment.id %>'>#{reply}</button>
     <% }); %>
   script#msgTemplate(type='text/template')
     form#newpost(action='#', method='post')
@@ -48,13 +50,16 @@ block append scripts
             textarea#wmd-input.wmd-input(name='text')
           div#preview
             div#wmd-preview.wmd-preview
-      div
+      div.buttons
         input#btnSend(type="submit", value="#{send}")   
+        input#btnDraft(type="button", value="#{draft}")   
         input#btnReset(type="reset", value="#{reset}")
 
 block append primary
   div#threadListView
     div#threadListTabs
+      form#searchform
+        input#search(name='searchstr', placeholder='#{search}')
       ul
         li
           a#latest-link(href='#latest') #{latest}
@@ -62,14 +67,24 @@ block append primary
           a#hot-link(href='#hot') #{hot}
         li
           a#unanswered-link(href='#unanswered') #{unanswered}
+        li#searchresult-item
+          a#searchresult-link(href='#searchresult') #{searchresult}
       div#latest
         ul.threadList
       div#hot
         ul.threadList
       div#unanswered
         ul.threadList
+      div#searchresult
+        ul.threadList
   div#threadView
     ul#thread
-  div#messageWriter
+    div#messageWriter
+  div#settingsView
+    label(for='defaultThreadList') #{defaultThreadList}
+    select#defaultThreadList
+      option(value='latest') #{latest}
+      option(value='hot') #{hot}
+      option(value='unanswered') #{unanswered}
 
 

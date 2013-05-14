@@ -64,19 +64,19 @@ li.menuitem {
   color: hsl(210, 100%, 20%);
 }
 
-div.main {
+div#main {
   color: #003366;
   background-color: #C7D0D9;
 }
-div.primary {
+div#primary {
   margin-right: 200px;
   padding: 1%;
 }
-div.sidebar {
+div#sidebar {
   float:right;
   width: 200px;
 }
-div.footer {
+div#footer {
   text-align: center;
   clear: both;
 }
@@ -84,13 +84,28 @@ div.buttons {
   text-align: right;
 }
 
-input#search {
-  width: 150px;
-}
-
-div.commentbuttons {
+form#searchform {
   text-align: right;
 }
+input#search {
+  width: 250px;
+}
+
+div.buttons {
+  text-align: right;
+}
+
+div.commentfooter {
+  background-color: hsl(207, 55%, 92%);
+  height: 25px;
+}
+span.buttons {
+  float: right;
+}
+span.username {
+  float: left;
+}
+
 
 div.threadText {
   margin-top: 10px;

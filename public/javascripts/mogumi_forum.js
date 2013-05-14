@@ -9,8 +9,11 @@ Mogumi.forum = function() {
     var messageWriter;
     var threadListView;
     var threadView;
+    var settingsView;
+    var menulistView;
     var urlForumRoot = '/forum';
     var urlForumThread = '/forum/thread';
+    var vent = _.extend({}, Backbone.Events);
 
     var PostModel = Backbone.Model.extend({
         url: '/forum/thread/post'
@@ -44,6 +47,12 @@ Mogumi.forum = function() {
             console.log('ThreadListCollection.onModelAdded: ' + JSON.stringify(data));
             this.add(data);
         },
+        executeFetch: function (param) {
+            this.fetch({
+                reset: true,
+                param: param
+            });
+        }
 
     });
     
@@ -55,32 +64,52 @@ Mogumi.forum = function() {
             "click a.threadLink": "onClickLink",
             "click a#latest-link": "onClickLatest",
             "click a#hot-link": "onClickHot",
-            "click a#unanswered-link": "onClickUnanswered"
+            "click a#unanswered-link": "onClickUnanswered",
+            "click a#searchresult-link": "onClickSearchResult",
+            "keypress #search": "search"
         },
-        
         onClickLink: function (e) {
             e.preventDefault();
             var dataId = $(e.target).attr('data-id');
-            openThreadView(dataId);
+            vent.trigger("threadview:open", dataId);
         },
         
-        fetchCollection: function (type) {
+        executeFetch: function (type) {
             this.currentElement = $('div#' + type);
-            this.collection.fetch({
-                reset: true,
-                param: {
+            this.collection.executeFetch(
+                {
                     type: type
                 }
-            });
+            );
+        },
+        executeSearch: function () {
+            this.currentElement = $('div#searchresult');
+            this.collection.executeFetch(
+                {
+                    type: 'search',
+                    key: $('#search').val()
+                }
+            );
+        },
+        search: function (e) {
+            if (e.which !== 13) {
+                return;
+            }
+            e.preventDefault();
+            $('#searchresult-item').show();
+            this.executeSearch();
+        },
+        onClickSearchResult: function (e) {
+            this.executeSearch();
         },
         onClickLatest: function (e) {
-            this.fetchCollection('latest');
+            this.executeFetch('latest');
         },
         onClickHot: function (e) {
-            this.fetchCollection('hot');
+            this.executeFetch('hot');
         },
         onClickUnanswered: function (e) {
-            this.fetchCollection('unanswered');
+            this.executeFetch('unanswered');
         },
         
         initialize: function() {
@@ -93,6 +122,8 @@ Mogumi.forum = function() {
             this.collection.bind('all', function(data) {
                 console.log(JSON.stringify(data));
             });
+            
+            $('#searchresult-item').hide();
 
             this.template = _.template($('#threadListTemplate').html());
             window.history.pushState(null, null, this.collection.url);
@@ -102,6 +133,7 @@ Mogumi.forum = function() {
             $('div#latest').hide();
             $('div#hot').hide();
             $('div#unanswered').hide();
+            $('div#searchresult').hide();
             this.currentElement.show();
 
             var threadList = this.collection.toJSON();
@@ -122,16 +154,14 @@ Mogumi.forum = function() {
     
     });
     var openThreadListView = function () {
-        $('#threadListView').show();
-        $('#threadView').hide();
-        $('#messageWriter').hide();
+        ViewSwitcher.open('#threadListView');        
 
         if ($( "#threadListTabs" ).length) {
             $( "#threadListTabs" ).tabs();
         }
         var threadList = new ThreadListCollection();
-        threadList.fetch({
-            reset: true,
+        
+        threadList.executeFetch({
             param: {
                 type: 'latest'
             }
@@ -159,7 +189,7 @@ Mogumi.forum = function() {
         onClickReply: function (e) {
             var dataId = $(e.target).attr('data-id');
             console.log('Reply: ' + dataId);
-            openReplyWriter(dataId);
+            vent.trigger("messagewriterview:open", dataId)
         },
 
         initialize: function() {
@@ -170,7 +200,6 @@ Mogumi.forum = function() {
             this.template = _.template($('#threadTemplate').html());
             var url = this.model.url + '?id=' + this.model.id;
             window.history.pushState(null, null, url);
-            
         },
         render: function() {
             var threadInfo = this.model.toJSON();
@@ -201,7 +230,7 @@ Mogumi.forum = function() {
             this.model.bind('sync', this.onModelSaved);
         },
         onModelSaved: function(model, response, options) {
-            openThreadView(this.model.id);
+            vent.trigger("threadview:open", this.model.id);
         },
         onChanged: function(e) {
             var target = $(e.currentTarget);
@@ -228,34 +257,89 @@ Mogumi.forum = function() {
         }
     
     });
+    var SettingsView = Backbone.View.extend({
+    });
+    var MenulistView = Backbone.View.extend({
+        events: {
+            "click a#newthread": "onClickNewThread",
+            "click a#settings": "onClickSettings",
+            "click a#help": "onClickHelp"
+        },        
+        onClickNewThread: function (e) {
+            e.preventDefault();
+            openNewThreadEditor();
+        },
+        onClickSettings: function (e) {
+            e.preventDefault();
+            openSettingsView();
+        },
+        onClickHelp: function (e) {
+            e.preventDefault();
+            alert('help');
+        }
+    });
+    var ForumRouter = Backbone.Router.extend({
+        routes: {
+        },
+        index: function () {
+            console.log('index');    
+        },
+        newthread: function () {
+            openNewThreadEditor();
+        },
+        settings: function () {
+            openSettingsView();
+        },
+        help: function () {
+            alert('help');
+            
+        }
+    });
+    
+    var ViewSwitcher = {
+        currentView: null,
+        open: function (newView) {
+            if (this.currentView !== null) {
+                $(this.currentView).hide();
+            }
+            this.currentView = newView;
+            $(newView).show();
+        }
+    };
     
     var openThreadView = function (threadId) {
-        $('#threadListView').hide();
-        $('#threadView').show();
+        ViewSwitcher.open('#threadView');
+        $('#messageWriter').hide();
 
         var thread = new ThreadModel({ id: threadId });
         thread.fetch({reset: true});
         threadView = new ThreadView({
             el: $('#thread'),
             model: thread
-        })
+        });
         
         initMessageWriter();
         window.scrollTo( 0, 0 );
         
     };
-    
+    var openSettingsView = function () {
+        ViewSwitcher.open('#settingsView');
+        settingsView = new SettingsView();
+    };
     var openNewThreadEditor = function () {
-        $('#threadListView').hide();
-        $('#threadView').hide();
-        $('#messageWriter').show();
+        ViewSwitcher.open('#threadView');
         
         initMessageWriter();
         
     };
     
-    var openReplyWriter = function(id) {
-        messageWriter.model.set({replyTo: id});
+    var openMessageWriter = function(id) {
+        if (id !== undefined) {
+            messageWriter.model.set({
+                replyTo: id
+            });
+        }
+        ViewSwitcher.open('#threadView');
         $('#messageWriter').show();
 
         if ($( "#editTextTabs" ).length) {
@@ -277,6 +361,23 @@ Mogumi.forum = function() {
     };
     var init = function () {
         window.socket = io.connect('http://localhost:3000');
+        
+        vent.on("threadview:open", openThreadView);
+        vent.on("messagewriterview:open", openMessageWriter);
+        
+        /*
+        var router = new ForumRouter();
+        
+        Backbone.history.start({
+            pushState: true,
+            root: '/forum/'
+        });
+        */
+
+        $('#settingsView').hide();
+        menulistView = new MenulistView({
+            el: '#menulist'
+        });
     };
 
     var publicObj = {};

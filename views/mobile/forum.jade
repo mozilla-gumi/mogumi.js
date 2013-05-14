@@ -39,8 +39,9 @@ block append scripts
           input#email(type='text', name='email', value='')
         div#write
           textarea#wmd-input.wmd-input(name='text')
-      div
+      div.buttons
         input#btnSend(type="submit", value="#{send}")   
+        input#btnDraft(type="button", value="#{draft}")   
         input#btnReset(type="reset", value="#{reset}")
 
 block append primary

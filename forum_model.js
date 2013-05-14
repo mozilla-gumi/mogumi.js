@@ -62,5 +62,8 @@ module.exports.openDatabase = function(db) {
 	conn.once('open', onOpen);
 	
 };
+module.exports.newId = function () {
+	return new mongoose.Types.ObjectId();
+};
 module.exports.Thread = mongoose.model('forum_thread', threadSchema);
 module.exports.Post = mongoose.model('forum_post', postSchema);
